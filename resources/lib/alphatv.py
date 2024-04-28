@@ -232,9 +232,9 @@ class Indexer:
 
             url = client.parseDOM(item, 'a', ret='href')[0]
             title = client.replaceHTMLCodes(client.parseDOM(item, 'h3')[0]).replace(u'ᵒ', u' μοίρες')
-            image = client.parseDOM(item, 'div', attrs={'class': 'tvShowImg'}, ret='style')[0]
-            image = re.search(r'\([\'"](.+?)[\'"]\)', image).group(1)
-
+            # image = client.parseDOM(item, 'div', attrs={'class': 'tvShowImg'}, ret='style')[0]
+            # image = re.search(r'\([\'"](.+?)[\'"]\)', image).group(1)
+            image = client.parseDOM(item, 'img', attrs={'class': 'lazy'}, ret='src')[0]
             data = {'title': title, 'image': image, 'url': url}
 
             if 'alpha-news' in url:
@@ -635,9 +635,9 @@ class Indexer:
                 html = client.request(self.player_query.format(video_id=video_id, show_id=show_id, year=year))
 
             try:
-                object_ = client.parseDOM(html, 'div', attrs={'id': 'Video-1'}, ret='data-plugin-player')[0]
+                object_ = client.parseDOM(html, 'div', attrs={'id': 'Video-1'}, ret='data-plugin-kplayer')[0]
             except Exception:
-                object_ = client.parseDOM(html, 'div', attrs={'id': 'currentvideourl'}, ret='data-plugin-player')[0]
+                object_ = client.parseDOM(html, 'div', attrs={'id': 'currentvideourl'}, ret='data-plugin-kplayer')[0]
 
             url = json.loads(client.replaceHTMLCodes(object_))['Url']
 

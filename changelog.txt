@@ -1,3 +1,6 @@
+[B]2.4.1[/B]
+- Fixed issues related to web site changes
+
 [B]2.4.0[/B]
 - Revert of cache change back to traditional get
 - Bug fixes accross the board
