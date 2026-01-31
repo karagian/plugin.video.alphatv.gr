@@ -346,12 +346,16 @@ class Indexer:
             if descr.endswith((u'Nέο', u'Νεο', u'New')):
                 descr = descr[:-3]
             label = u' - '.join([title, descr])
+
+            descr = client.parseDOM(item, 'div', attrs={'class': 'epDetailsHidden'})[0]
+            descr = client.stripTags(descr).strip()
+
             image = client.parseDOM(item, 'div', attrs={'class': 'epImg'}, ret='style')[0]
             image = re.search(r'\([\'"](.+?)[\'"]\)', image).group(1)
             try:
                 video = re.search(r'WebTvVideoId&quot;:(\d+).+?Year&quot;:(\d{4})}', item)
                 url = self.player_query.format(video_id=video.group(1), show_id=show_id, year=video.group(2))
-                self.list.append({'title': label, 'image': image, 'url': url})
+                self.list.append({'title': label, 'image': image, 'url': url, 'plot': descr})
             except Exception:
                 pass
 
@@ -541,7 +545,7 @@ class Indexer:
             image = client.parseDOM(item, 'img', ret='src')[0]
             url = client.parseDOM(item, 'a', ret='href')[1]
 
-            self.list.append({'title': title, 'image': image, 'url': url})
+            self.list.append({'title': title, 'image': image, 'url': url, 'plot': label})
 
         return self.list
 

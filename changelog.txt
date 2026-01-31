@@ -1,3 +1,6 @@
+[B]2.4.2[/B]
+- Add plot of episodes where available
+
 [B]2.4.1[/B]
 - Fixed issues related to web site changes
 
